@@ -1,0 +1,258 @@
+/* Author: Ceyhun SAZDIR */
+
+/* Genel Ayarlar */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Siyah arka plan */
+    color: #fff; /* Beyaz metin rengi */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ekranın tamamını kaplama */
+}
+
+/* Player Container */
+.player-container {
+    width: 80%;
+    max-width: 800px;
+    background: none;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Video Wrapper */
+.video-wrapper {
+    position: relative;
+    background: black; /* Video arka planı */
+}
+
+video {
+    width: 100%; /* Videonun genişliği %100 */
+    display: block;
+}
+
+/* Overlay */
+.overlay {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out; /* Geçiş efekti */
+    z-index: 10;
+}
+
+/* Hover durumunda overlay (üst katman) görünürlüğü sıfırlanır */
+.video-wrapper:hover .overlay {
+    opacity: 0;
+}
+
+/* Kontroller */
+.controls {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7); /* Şeffaf siyah arka plan */
+    border-radius: 0px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 20;
+    box-sizing: border-box;
+    gap: 10px;
+    opacity: 1; /* Her zaman görünür */
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Hafif gölge efekti */
+    pointer-events: auto;
+}
+
+/* Butonlar */
+.button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+/* Buton hover efekti */
+.button:hover {
+    background: #ff00ff56; /* Hoverda mor arka plan */
+    transform: scale(1.1); /* Butonun büyümesi */
+}
+
+/* Progress Bar (İlerleme Çubuğu) */
+.progress-bar {
+    flex: 1;
+    height: 10px;
+    background: #555;
+    cursor: pointer;
+    position: relative;
+    margin: 0 10px;
+    border-radius: 5px;
+    overflow: visible;
+    transition: height 0.125s ease;
+}
+
+/* Hoverda ilerleme çubuğunun boyutunun artması */
+.progress-bar:hover {
+    height: 15px;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #ff00ff, #800080);
+    width: 0;
+    position: relative;
+    border-radius: 5px;
+}
+
+/* Thumb (İlerleme Çubuğu İşaretçisi) */
+.thumb {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Zaman Göstergesi */
+.time-display {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+/* Ses Kontrolü */
+.volume {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+    width: 40px; /* Başlangıç genişliği */
+    transition: width 0.3s ease; /* Genişleme animasyonu */
+    z-index: 10;
+}
+
+/* Ses kontrolü butonunun üzerine gelindiğinde genişliği artar */
+.volume:hover {
+    width: 150px; /* Genişlik artırılır */
+    z-index: 15; /* Hover durumunda daha yüksek z-index */
+}
+
+/* Ses slider'ı */
+.volume-slider {
+    display: block;
+    position: absolute;
+    top: 44%;
+    left: 50px; /* Sağ kaydırma */
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff00ff, #800080);
+    border-radius: 5px;
+    z-index: 15;
+    width: 100px; /* Çubuğun uzunluğu */
+    height: 8px; /* Çubuğun kalınlığı */
+    cursor: pointer;
+    outline: none;
+    opacity: 0; /* Başlangıçta görünmez */
+    visibility: hidden; /* Görünürlük kaldırıldı */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Ses kontrolü hover durumu */
+.volume:hover .volume-slider {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dropdown (Açılır Menü) */
+.dropdown {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* Dropdown focus durumu */
+.dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Hoverda dropdown menüsünün renginin değişmesi */
+.dropdown:hover {
+    background: #007bff33;
+    color: #007bff;
+}
+
+/* Pause Indicator (Duraklatma Göstergesi) */
+.pause-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 30;
+}
+
+/* Pause göstergesi görünür olduğunda */
+.pause-indicator.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Ayarlar Menüsü */
+.settings {
+    position: relative;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .player-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .controls {
+        flex-direction: column; /* Butonlar dikey yerleştirilir */
+        gap: 5px;
+    }
+
+    .button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .progress-bar {
+        height: 8px;
+    }
+
+    .settings-menu {
+        width: 200px; /* Daha dar genişlik */
+    }
+}

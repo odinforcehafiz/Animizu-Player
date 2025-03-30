@@ -1,0 +1,62 @@
+<!-- Author: Ceyhun SAZDIR -->
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Başlık ve Meta Etiketler -->
+    <meta charset="UTF-8"> <!-- Sayfa karakter setini UTF-8 olarak belirler -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobil uyumlu tasarım için viewport ayarı -->
+    <meta name="author" content="Ceyhun Sazdır"> <!-- Yazar bilgisi -->
+    <meta name="version" content="0.5"> <!-- Versiyon bilgisi -->
+    <title>Animizu Player</title> <!-- Sayfanın başlığını belirler -->
+    <link rel="stylesheet" href="style.css"> <!-- Sayfanın stilini belirleyen dış CSS dosyasına bağlantı -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome ikonlarını kullanabilmek için dış bağlantı -->
+</head>
+<body>
+
+    <!-- Video Oynatıcı Konteyneri -->
+    <div class="player-container">
+        <!-- Video Wrapper (Video Etrafındaki Kapsayıcı) -->
+        <div class="video-wrapper">
+            <video id="video" src="uploads/sample.mp4" allowfullscreen></video> <!-- Video ögesi kaynağı sample.mp4 -->
+            <div class="overlay"></div> <!-- Video üzerine eklenen örtü (gölgeleme veya başka bir amaç için) -->
+            <div class="pause-indicator" id="pauseIndicator"> <!-- Video duraklatıldığında görünen gösterge -->
+                <i class="fas fa-play"></i> <!-- Duraklatılmış durumda gösterilen play simgesi -->
+            </div>
+        </div>
+
+        <!-- Kontroller -->
+        <div class="controls">
+            <button id="playPause" class="button"> <!-- Oynatma/Duraklatma butonu -->
+                <i id="playPauseIcon" class="fas fa-play"></i> <!-- Butonun içindeki play simgesi -->
+            </button>
+            <div class="volume"> <!-- Ses kontrolü -->
+                <button id="volumeIcon" class="button"> <!-- Ses ikon butonu -->
+                    <i class="fas fa-volume-up"></i> <!-- Ses açma ikonu -->
+                </button>
+                <input type="range" id="volume" class="volume-slider" min="0" max="1" step="0.1"> <!-- Ses seviyesi ayar çubuğu -->
+            </div>
+
+            <!-- İlerleme Çubuğu -->
+            <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress"></div> <!-- Videonun oynatılma ilerlemesini gösteren çubuk -->
+                <div class="thumb"></div> <!-- Yuvarlak ilerleme imgesi -->
+            </div>
+
+            <!-- Zaman Gösterimi -->
+            <div class="time-display">
+                <span id="currentTime">0:00</span> / <span id="duration">0:00</span> <!-- Video oynatma zamanını gösteren etiket -->
+            </div>
+
+            <!-- Tam Ekran Butonu -->
+            <button id="fullscreenButton" class="button"> <!-- Tam ekran açma butonu -->
+                <i class="fas fa-expand"></i> <!-- Tam ekran simgesi -->
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Dosyası -->
+    <script src="script.js"></script> <!-- Sayfada kullanılan JavaScript dosyasına bağlantı -->
+
+</body>
+</html>
