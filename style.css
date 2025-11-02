@@ -4,7 +4,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Siyah arka plan */
+    background-color: #000000; /* Siyah arka plan */
     color: #fff; /* Beyaz metin rengi */
     display: flex;
     justify-content: center;
@@ -25,7 +25,7 @@ body {
 /* Video Wrapper */
 .video-wrapper {
     position: relative;
-    background: black; /* Video arka planı */
+    background: rgb(0, 0, 0); /* Video arka planı */
 }
 
 video {
@@ -91,6 +91,16 @@ video {
 .button:hover {
     background: #ff00ff56; /* Hoverda mor arka plan */
     transform: scale(1.1); /* Butonun büyümesi */
+}
+
+/* Çarkın basılı görünmemesi için varsayılan odak/aktif kenarlıklarını kaldırın; gerekirse erişilebilir odak durumunu koruyun */
+.button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.button:active {
+    transform: scale(1.08);
 }
 
 /* Progress Bar (İlerleme Çubuğu) */
@@ -228,6 +238,54 @@ video {
 /* Ayarlar Menüsü */
 .settings {
     position: relative;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    bottom: 50px; /* menu üstte açılır */
+    right: 0;
+    background: rgba(20,20,20,0.95);
+    border: 1px solid #444;
+    padding: 6px;
+    border-radius: 6px;
+    min-width: 90px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    z-index: 50;
+    flex-direction: column;
+}
+
+.settings.open .settings-menu {
+    display: flex;
+}
+
+.speed-option {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 6px 10px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.speed-option:hover {
+    background: #333;
+}
+
+.speed-option.selected {
+    background: linear-gradient(90deg, #ff00ff, #800080);
+    color: #000;
+}
+
+/* Menü açıldığında çark eğilir: sağa doğru hafifçe döner ve durur; kapandığında geri döner */
+.settings .fa-cog {
+    transition: transform 0.28s cubic-bezier(.2,.8,.2,1);
+    transform-origin: 50% 50%;
+}
+.settings.open .fa-cog {
+    transform: rotate(22deg);
 }
 
 /* Responsive Tasarım */

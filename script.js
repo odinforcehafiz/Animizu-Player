@@ -13,6 +13,11 @@ const currentTimeDisplay = document.getElementById('currentTime'); // Şu anki z
 const durationDisplay = document.getElementById('duration'); // Toplam süre
 const thumb = document.querySelector('.thumb'); // İlerleme çubuğundaki thumb
 const pauseIndicator = document.getElementById('pauseIndicator'); // Pause göstergesi
+const settingsButton = document.getElementById('settingsButton'); // Ayarlar (cog) butonu
+const speedMenu = document.getElementById('speedMenu'); // Hız menüsü
+
+// küçük düzeltme: önceki ses değerini saklamak için değişken
+let previousVolume = 1;
 
 // Zaman formatını "dakika:saniye" formatında göstermek için fonksiyon
 const formatTime = (time) => {
@@ -174,10 +179,78 @@ volumeIcon.addEventListener('click', toggleMute);
 
 // Ses düzeyini ayarlama (slider)
 volume.addEventListener('input', () => {
-    video.volume = volume.value;
+    video.volume = parseFloat(volume.value);
     updateVolumeIcon(video.volume);
     localStorage.setItem('volume', volume.value); // Ses düzeyini kaydet
 });
+
+// --- Playback speed (settings menu) ---
+const speeds = [0.5, 1, 1.25, 1.5, 2];
+let currentPlaybackRate = 1;
+
+const markSelectedOption = (rate) => {
+    if (!speedMenu) return;
+    const options = speedMenu.querySelectorAll('.speed-option');
+    options.forEach(opt => {
+        if (parseFloat(opt.dataset.speed) === rate) {
+            opt.classList.add('selected');
+            opt.setAttribute('aria-pressed', 'true');
+        } else {
+            opt.classList.remove('selected');
+            opt.setAttribute('aria-pressed', 'false');
+        }
+    });
+};
+
+const setPlaybackRate = (rate) => {
+    if (typeof rate !== 'number' || isNaN(rate)) return;
+    video.playbackRate = rate;
+    currentPlaybackRate = rate;
+    try { localStorage.setItem('playbackRate', String(rate)); } catch (e) { /* ignore */ }
+    // buton başlığını güncelle
+    if (settingsButton) settingsButton.setAttribute('title', `Hız: ${rate}x`);
+    markSelectedOption(rate);
+};
+
+const toggleSettingsMenu = (open) => {
+    const wrapper = document.getElementById('speedSettings');
+    if (!speedMenu || !wrapper) return;
+    const isOpen = typeof open === 'boolean' ? open : !wrapper.classList.contains('open');
+    if (isOpen) {
+        wrapper.classList.add('open');
+        speedMenu.setAttribute('aria-hidden', 'false');
+    } else {
+        wrapper.classList.remove('open');
+        speedMenu.setAttribute('aria-hidden', 'true');
+    }
+};
+
+if (settingsButton) {
+    settingsButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSettingsMenu();
+        try { settingsButton.blur(); } catch (err) { /* ignore */ }
+    });
+}
+
+// Menü dışına tıklandığında menüyü kapat
+document.addEventListener('click', (e) => {
+    const wrapper = document.getElementById('speedSettings');
+    if (!wrapper) return;
+    if (!wrapper.contains(e.target)) toggleSettingsMenu(false);
+});
+
+// Seçenek seçimi
+if (speedMenu) {
+    speedMenu.addEventListener('click', (e) => {
+        const btn = e.target.closest('.speed-option');
+        if (!btn) return;
+        const rate = parseFloat(btn.dataset.speed);
+        if (isNaN(rate)) return;
+        setPlaybackRate(rate);
+        toggleSettingsMenu(false);
+    });
+}
 
 // Mouse hareketlerine göre kontrolleri göster/gizle
 let controlsTimeout;
@@ -205,12 +278,23 @@ playerContainer.addEventListener('mousemove', showControls);
 window.addEventListener('DOMContentLoaded', () => {
     const savedVolume = localStorage.getItem('volume');
     if (savedVolume !== null) {
-        video.volume = savedVolume;
-        volume.value = savedVolume; // Kaydedilen değeri çubuğa uygula
-        updateVolumeIcon(video.volume); // Simgeyi güncelle
+        const v = parseFloat(savedVolume);
+        video.volume = isNaN(v) ? 1 : v;
+        volume.value = video.volume; // Kaydedilen değeri çubuğa uygula
+    } else {
+        video.volume = 1;
+        volume.value = 1;
+    }
+    updateVolumeIcon(video.volume); // Simgeyi güncelle
+    // oynatma hızını localStorage'dan başlat (eğer varsa)
+    try {
+        const savedRate = parseFloat(localStorage.getItem('playbackRate'));
+        if (!isNaN(savedRate) && speeds.includes(savedRate)) {
+            setPlaybackRate(savedRate);
+        } else {
+            setPlaybackRate(1);
+        }
+    } catch (e) {
+        setPlaybackRate(1);
     }
 });
-
-// Varsayılan olarak en yüksek ses seviyesi
-video.volume = 1;
-volume.value = 1;

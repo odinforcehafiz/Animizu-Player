@@ -7,7 +7,7 @@
     <meta charset="UTF-8"> <!-- Sayfa karakter setini UTF-8 olarak belirler -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobil uyumlu tasarım için viewport ayarı -->
     <meta name="author" content="Ceyhun Sazdır"> <!-- Yazar bilgisi -->
-    <meta name="version" content="0.5"> <!-- Versiyon bilgisi -->
+    <meta name="version" content="1.0"> <!-- Versiyon bilgisi -->
     <title>Animizu Player</title> <!-- Sayfanın başlığını belirler -->
     <link rel="stylesheet" href="style.css"> <!-- Sayfanın stilini belirleyen dış CSS dosyasına bağlantı -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome ikonlarını kullanabilmek için dış bağlantı -->
@@ -46,6 +46,20 @@
             <!-- Zaman Gösterimi -->
             <div class="time-display">
                 <span id="currentTime">0:00</span> / <span id="duration">0:00</span> <!-- Video oynatma zamanını gösteren etiket -->
+            </div>
+
+            <!-- Ayarlar (hız) butonu - Tam ekran butonunun solunda yer alır -->
+            <div class="settings" id="speedSettings"> 
+                <button id="settingsButton" class="button" title="Hız"> <!-- Ayarlar (cog) ikonu -->
+                    <i class="fas fa-cog"></i>
+                </button>
+                <div id="speedMenu" class="settings-menu" role="menu" aria-hidden="true">
+                    <button class="speed-option" data-speed="0.5" role="menuitem">0.5x</button>
+                    <button class="speed-option" data-speed="1" role="menuitem">1x</button>
+                    <button class="speed-option" data-speed="1.25" role="menuitem">1.25x</button>
+                    <button class="speed-option" data-speed="1.5" role="menuitem">1.5x</button>
+                    <button class="speed-option" data-speed="2" role="menuitem">2x</button>
+                </div>
             </div>
 
             <!-- Tam Ekran Butonu -->

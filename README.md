@@ -1,6 +1,6 @@
 # Animizu Player
 # Author: Ceyhun SAZDIR
-# Version: 0.5
+# Version: 1.0
 
 Animizu için HTML, JS, CSS ile geliştirilmiş bir video oynatıcı.
 
@@ -9,3 +9,4 @@ Animizu için HTML, JS, CSS ile geliştirilmiş bir video oynatıcı.
 - Ses kontrolü
 - İlerleme çubuğu
 - Tam ekran modu
+- Hız kontrolü
